@@ -1,27 +1,27 @@
 # CSCK542_Group_B_Assignment
 
 ## Project Description
-This project is develops APIs that allows users to create, read, update, and delete (CRUD) data from a college course administration database based upon their .
+This project develops APIs that allows users to create, read, update, and delete (CRUD) data from a college course administration database.
 
-The application is built using Node.js and Express.js. 
+The application is built using Node.js and Express. 
 
-The database is built using MySQL based on the provided files in the SQL Database File. 
+The database is built using MySQL and MySQL Workbench based on the provided files in the SQL Database Folder. 
 
 API requests and testing can be undertaken using the Postman application and the provided Postman collection.
 
 To run the project the files should be downloaded to a local directory.
 
 ## Database Installation
-The  database was created using MySQL and MySQL workbench. The database can be installed using the provided SQL Dump Database Files.
+The database can be installed using the provided SQL Dump Database files.
 
-To create the database create a new MySQL connection on create a new database called 'mydb' using the following command:
+To create the database open MySQL Workbench and create and connect to a new database called 'mydb' using the following command:
 ```
 CREATE DATABASE mydb;
 USE mydb;
 ```
-Using the MySQL workbench, select the 'Server' tab and select 'Data Import'. 
+In MySQL workbench, select the 'Server' tab and select 'Data Import'. 
 
-Select the 'Import from Dump Project Folder' option and then 'Load Folder Contents'. Select the 'mydb' database object. Then select the 'Start Import' option.
+Select the 'Import from Dump Project Folder' option and then 'Load Folder Contents'. Select the 'mydb' database object and then 'Start Import'.
 
 This will create the database schema.
 
@@ -43,7 +43,7 @@ To test the files open the Postman application and select the 'Import' option fr
 
 This collection contains API calls for each of the functional requirements of the project and tests to ensure valid and invalid inputs produce the expected responses.
 
-Different input values can be passed to the API calls by selecting the 'Body' tab and selecting the 'raw' option. The input values can then be updated in JSON format.
+Different input values can be passed to the API calls by selecting the 'Body' tab and selecting the 'raw' option. The input values can then be updated in JSON format maintaining the property labels.
 
 ## Team Members
 Miguel Angel Lopez Lago\
