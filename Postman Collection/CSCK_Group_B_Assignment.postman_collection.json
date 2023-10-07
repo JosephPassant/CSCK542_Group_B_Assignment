@@ -1,0 +1,878 @@
+{
+	"info": {
+		"_postman_id": "ddab8c38-404e-4d02-bc2b-d26e9d0d0145",
+		"name": "CSCK_Group_B_Assignment",
+		"description": "This Postman collection is designed to test the APIs developed for our group project on MySQL & APIs. The project's main objective is to create SQL queries that support functional requirements, establish a business logic layer using NodeJS, and ensure each functional requirement has a corresponding API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29956419",
+		"_collection_link": "https://galactic-desert-867297.postman.co/workspace/fdfd4741-cc1f-4242-88dc-747fde0e753f/collection/29853120-ddab8c38-404e-4d02-bc2b-d26e9d0d0145?action=share&source=collection_link&creator=29956419"
+	},
+	"item": [
+		{
+			"name": "VALID Admin Enable / Disable Course Availability",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Expected success message",
+							"const SUCCESS = \"Course availability successfully updated\"",
+							"",
+							"//Expected Success tests",
+							"pm.test(\"Content-Type should be JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Status code is 200 for successful responses\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct success message and status for successful input\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.success).to.eql(SUCCESS);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"AdminID\": 1,\n  \"CourseID\": 8,\n  \"IsAvailable\": 1\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:3000/courses/availability",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"courses",
+						"availability"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "INVALID Admin Enable / Disable Course Availability",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Expected success and error messages as constants",
+							"const ERR_UNAUTHORISED = \"User is not authorised to perform this action\";",
+							"const ERR_INVALID_AVAILABILITY = \"Invalid availability status. Acceptable values are 0 (unavailable) or 1 (available).\";",
+							"const ERR_COURSE_NOT_FOUND = \"Course not found\";",
+							"const ERR_CATCHERROR = \"Internal server error\";",
+							"",
+							"// General error handling tests",
+							"pm.test(\"Error responses should always contain an 'error' property\", function () {",
+							"    if (pm.response.code !== 200) {",
+							"        pm.expect(pm.response.json()).to.have.property(\"error\");",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message and status for invalid availability input\", function () {",
+							"    if (pm.response.code === 400) {",
+							"        pm.expect(pm.response.json().error).to.eql(ERR_INVALID_AVAILABILITY);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message and status for unauthorized user\", function () {",
+							"    if (pm.response.code === 403) {",
+							"        pm.expect(pm.response.json().error).to.eql(ERR_UNAUTHORISED);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message and status for non-existent course\", function () {",
+							"    if (pm.response.code === 404) {",
+							"        pm.expect(pm.response.json().error).to.eql(ERR_COURSE_NOT_FOUND);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message for internal server errors\", function () {",
+							"    if (pm.response.code === 500) {",
+							"        pm.expect(pm.response.json().error).to.eql(ERR_CATCHERROR);",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"AdminID\": 1,\n  \"CourseID\": 8,\n  \"IsAvailable\": 1\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:3000/courses/availability",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"courses",
+						"availability"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VALID Admin Assign Course to Teacher",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Expected success message",
+							"const SUCCESS = \"Teacher assigned to course\"",
+							"",
+							"//Expected Success tests",
+							"pm.test(\"Content-Type should be JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Status code is 200 for successful responses\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct success message and status for successful input\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.success).to.eql(SUCCESS);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"AdminID\": 1,\n  \"CourseID\": 8,\n  \"TeacherID\": 6\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:3000/courses/assignteacher",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"courses",
+						"assignteacher"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "INVALID Admin Assign Course to Teacher",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Expected success and error messages as constants",
+							"const ERR_UNAUTHORISED = \"User is not authorised to perform this action\";",
+							"const ERR_TEACHERNOTFOUND = \"Teacher not found or is not a teacher\"",
+							"const ERR_COURSE_NOT_FOUND = \"Course not found\";",
+							"const ERR_CATCHERROR = \"Internal server error\";",
+							"",
+							"// General error handling tests",
+							"pm.test(\"Error responses should always contain an 'error' property\", function () {",
+							"    if (pm.response.code !== 200) {",
+							"        pm.expect(pm.response.json()).to.have.property(\"error\");",
+							"    }",
+							"});",
+							"",
+							"",
+							"// Specific Error Handling Tests",
+							"pm.test(\"Correct error message for 403 status code, AdminID not authorised to perform action or TeacherID is not found or not a teacher\", function () {",
+							"    if (pm.response.status === 403) {",
+							"        pm.expect(pm.response.json().error).to.be.oneOf([ERR_UNAUTHORISED, ERR_TEACHERNOTFOUND]);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message and status for non-existent course\", function () {",
+							"    if (pm.response.code === 404) {",
+							"        pm.expect(pm.response.json().error).to.eql(ERR_COURSE_NOT_FOUND);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message for internal server errors\", function () {",
+							"    if (pm.response.code === 500) {",
+							"        pm.expect(pm.response.json().error).to.eql(ERR_CATCHERROR);",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"AdminID\": 1,\n  \"CourseID\": 5,\n  \"TeacherID\": 6\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:3000/courses/assignteacher",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"courses",
+						"assignteacher"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Available Courses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Expected success and error messages as constants",
+							"const ERR_CATCHERROR = \"Internal server error\";",
+							"",
+							"//Success tests",
+							"pm.test(\"Status code is 200 for Successful requests\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"//Error handling checks",
+							"pm.test(\"Error responses should always contain an 'error' property\", function () {",
+							"    if (pm.response.code !== 200) {",
+							"        pm.expect(pm.response.json()).to.have.property(\"error\");",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message for internal server errors\", function () {",
+							"    if (pm.response.code === 500) {",
+							"        pm.expect(pm.response.json().error).to.eql(ERR_CATCHERROR);",
+							"    }",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/courses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VALID Student Enrol in Course",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Expected success message ",
+							"const SUCCESS = \"Student enrolled in course\"",
+							"",
+							"",
+							"//Expected Success tests",
+							"pm.test(\"Content-Type should be JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Status code is 200 for successful responses\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct success message and status for successful input\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.success).to.eql(SUCCESS);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"CourseID\": 8,\n  \"StudentID\": 15\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:3000/student/enrol",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"student",
+						"enrol"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "INVALID Student Enrol in Course",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Expected error messages as constants",
+							"const ERR_INPUT_NOT_PROVIDED = \"StudentID and CourseID are required\"",
+							"const ERR_STUDENT_NOT_FOUND = \"Student not found. Please check the student ID\"",
+							"const ERR_COURSE_NOT_FOUND = \"Course not found\";",
+							"const ERR_COURSE_NOT_AVAILABLE = \"Course is not available for enrolment\";",
+							"const ERR_ALREADY_ENROLLED = \"Student is already enrolled in this course\";",
+							"const ERR_CATCHERROR = \"Internal server error\";",
+							"",
+							"// General error handling tests",
+							"pm.test(\"Error responses should always contain an 'error' property\", function () {",
+							"    if (pm.response.code !== 200) {",
+							"        pm.expect(pm.response.json()).to.have.property(\"error\");",
+							"    }",
+							"});",
+							"",
+							"// Specific Error Handling Tests",
+							"pm.test(\"Correct error message for 400 status code, input not provided\", function () {",
+							"    if (pm.response.code === 400) {",
+							"        pm.expect(pm.response.json().error).to.be.eql(ERR_INPUT_NOT_PROVIDED);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message for 403 status code, If user is not student or course is not available for enrollment\", function () {",
+							"    if (pm.response.status === 403) {",
+							"        pm.expect(pm.response.json().error).to.be.oneOf([ERR_STUDENT_NOT_FOUND, ERR_COURSE_NOT_AVAILABLE]);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message for 404 status code, course does not exist\", function () {",
+							"    if (pm.response.code === 404) {",
+							"        pm.expect(pm.response.json().error).to.be.eql(ERR_COURSE_NOT_FOUND);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message for 409 status code, student already enrolled\", function () {",
+							"    if (pm.response.code === 409) {",
+							"        pm.expect(pm.response.json().error).to.be.eql(ERR_ALREADY_ENROLLED);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message for internal server errors\", function () {",
+							"    if (pm.response.code === 500) {",
+							"        pm.expect(pm.response.json().error).to.eql(ERR_CATCHERROR);",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"CourseID\": 1,\n  \"StudentID\": 15\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:3000/student/enrol",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"student",
+						"enrol"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VALID Teacher Assign Mark",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Expected success message",
+							"const SUCCESS = \"Student mark updated\";",
+							"",
+							"",
+							"//Expected Success tests",
+							"pm.test(\"Content-Type should be JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Status code is 200 for successful responses\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct success message and status for successful input\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.success).to.eql(SUCCESS);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"TeacherID\": 6,\n  \"CourseID\": 8,\n  \"StudentID\": 15,\n  \"Mark\": 1\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/enrol/mark",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"enrol",
+						"mark"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "INVALID Teacher Assign Mark",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Expected error messages as constants",
+							"const ERR_INPUT_NOT_PROVIDED = \"TeacherID, CourseID, StudentID, and Mark are required\";",
+							"const ERR_MARK_NOT_VALID = \"Invalid value for Mark. It should be 0 (fail) or 1 (pass).\"",
+							"const ERR_UNAUTHORISED = \"User is not authorised to update the mark\";",
+							"const ERR_NOT_COURSE_TEACHER = \"Teacher is not authorised to update marks for this course\";",
+							"const ERR_STUDENT_NOT_ENROLLED = \"Enrolment record not found for the given student and or course ID.\"",
+							"const ERR_CATCHERROR = \"Internal server error\";",
+							"",
+							"// General error handling tests",
+							"pm.test(\"Error responses should always contain an 'error' property\", function () {",
+							"    if (pm.response.code !== 200) {",
+							"        pm.expect(pm.response.json()).to.have.property(\"error\");",
+							"    }",
+							"});",
+							"",
+							"",
+							"// Specific Error Handling Tests",
+							"pm.test(\"Correct error message for 400 status code, Input not given or invalid mark provided\", function () {",
+							"    if (pm.response.status === 400) {",
+							"        pm.expect(pm.response.json().error).to.be.oneOf([ERR_INPUT_NOT_PROVIDED, ERR_MARK_NOT_VALID]);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message for 403 status code, user not teacher or is not teacher of the course\", function () {",
+							"    if (pm.response.status === 403) {",
+							"        pm.expect(pm.response.json().error).to.be.oneOf([ERR_UNAUTHORISED, ERR_NOT_COURSE_TEACHER]);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message and status if student is not enrolled in course\", function () {",
+							"    if (pm.response.code === 404) {",
+							"        pm.expect(pm.response.json().error).to.eql(ERR_STUDENT_NOT_ENROLLED);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message for internal server errors\", function () {",
+							"    if (pm.response.code === 500) {",
+							"        pm.expect(pm.response.json().error).to.eql(ERR_CATCHERROR);",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"TeacherID\": 6,\n  \"CourseID\": 8,\n  \"StudentID\": 15,\n  \"Mark\": 1\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/enrol/mark",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"enrol",
+						"mark"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VALID Create course",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Expected success message",
+							"const SUCCESS = \"Course created successfully\"",
+							"",
+							"//Expected Success tests",
+							"pm.test(\"Content-Type should be JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Status code is 200 for successful responses\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct success message and status for successful input\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.success).to.eql(SUCCESS);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"AdminID\": 1,\n  \"CourseTitle\": \"Test15\",\n  \"TeacherID\": 4,\n  \"IsAvailable\" : 1\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:3000/courses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "INVALID Create course Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Expected error messages as constants",
+							"const ERR_UNAUTHORISED = \"User is not authorised to perform this action\";",
+							"const ERR_INVALID_ISAVAILABLE = \"Invalid value for IsAvailable. It should be 0 or 1.\";",
+							"const ERR_TEACHERNOTFOUND = \"Teacher not found or user is not a teacher\";",
+							"const ERR_COURSEALREADYEXISTS = \"A course with this title already exists\";",
+							"const ERR_CATCHERROR = \"Internal server error\";",
+							"",
+							"// General error handling tests",
+							"pm.test(\"Error responses should always contain an 'error' property\", function () {",
+							"    if (pm.response.code !== 200) {",
+							"        pm.expect(pm.response.json()).to.have.property(\"error\");",
+							"    }",
+							"});",
+							"",
+							"",
+							"// Specific Error Handling Tests",
+							"pm.test(\"Correct error message for 403 status code, AdminID not authorised to perform action or TeacherID is not found or not a teacher\", function () {",
+							"    if (pm.response.status === 403) {",
+							"        pm.expect(pm.response.json().error).to.be.oneOf([ERR_UNAUTHORISED, ERR_TEACHERNOTFOUND]);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message for 400 status code, invalid IsAvailable input or if course already exists\", function () {",
+							"    if (pm.response.code === 400) {",
+							"        pm.expect(pm.response.json().error).to.be.oneOf([ERR_INVALID_ISAVAILABLE, ERR_COURSEALREADYEXISTS]);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message for internal server errors\", function () {",
+							"    if (pm.response.code === 500) {",
+							"        pm.expect(pm.response.json().error).to.eql(ERR_CATCHERROR);",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"AdminID\": 1,\n  \"CourseTitle\": \"Test15\",\n  \"TeacherID\": 4,\n  \"IsAvailable\" : 1\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:3000/courses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VALID Delete course",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Expected success message",
+							"const SUCCESS = \"Course deleted successfully\"",
+							"",
+							"//Expected Success tests",
+							"pm.test(\"Content-Type should be JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Status code is 200 for successful responses\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct success message and status for successful input\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.success).to.eql(SUCCESS);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"AdminID\": 1,\n  \"CourseID\":9\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:3000/courses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "INVALID Delete course Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Expected error messages as constants",
+							"const ERR_UNAUTHORISED = \"User is not authorised to perform this action\";",
+							"const ERR_COURSE_NOT_FOUND = \"Course not found\"",
+							"const ERR_USERSENROLLED = \"Cannot delete course. There are users enrolled in this course.\";",
+							"const ERR_CATCHERROR = \"Internal server error\";",
+							"",
+							"// General error handling tests",
+							"pm.test(\"Error responses should always contain an 'error' property\", function () {",
+							"    if (pm.response.code !== 200) {",
+							"        pm.expect(pm.response.json()).to.have.property(\"error\");",
+							"    }",
+							"});",
+							"",
+							"",
+							"// Specific Error Handling Tests",
+							"pm.test(\"Correct error message for 403 status code, AdminID not authorised to perform action\", function () {",
+							"    if (pm.response.status === 403) {",
+							"        pm.expect(pm.response.json().error).to.be.eql(ERR_UNAUTHORISED);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message for 400 status code, users are enrolled on the course to be deleted\", function () {",
+							"    if (pm.response.code === 400) {",
+							"        pm.expect(pm.response.json().error).to.be.eql(ERR_USERSENROLLED);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message for 404 status code, course does not exist\", function () {",
+							"    if (pm.response.code === 404) {",
+							"        pm.expect(pm.response.json().error).to.be.eql(ERR_COURSE_NOT_FOUND);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Correct error message for internal server errors\", function () {",
+							"    if (pm.response.code === 500) {",
+							"        pm.expect(pm.response.json().error).to.eql(ERR_CATCHERROR);",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"AdminID\": 1,\n  \"CourseID\":8\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:3000/courses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"courses"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
